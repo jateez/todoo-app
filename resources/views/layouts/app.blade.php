@@ -23,6 +23,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a> 
+                <a class="navbar-brand" href="{{ route('tasks.index') }}">
+                    {{ config('app.name Task', 'Task') }}
+                </a> 
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name Groups', 'Groups') }}
                 </a>
