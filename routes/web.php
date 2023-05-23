@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Group
+Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
+Route::get('/groups/create', [GroupController::class, 'create'])->name('groups.create');
+Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
+Route::delete('/groups/{group}', [GroupController::class, 'delete'])->name('groups.delete');
+Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
