@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\GroupController;
 use App\http\Controllers\InviteController;
+use App\http\Controllers\Mail\InvitationEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
