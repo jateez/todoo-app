@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\GroupController;
-
+use App\http\Controllers\InviteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
