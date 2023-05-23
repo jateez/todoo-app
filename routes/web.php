@@ -28,3 +28,5 @@ Route::get('/groups/create', [GroupController::class, 'create'])->name('groups.c
 Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
 Route::delete('/groups/{group}', [GroupController::class, 'delete'])->name('groups.delete');
 Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
+Route::get('/invites', [InviteController::class, 'showInviteForm'])->name('invites.form');
+Route::post('/invites', [InviteController::class, 'sendInvite'])->name('invite.send');
