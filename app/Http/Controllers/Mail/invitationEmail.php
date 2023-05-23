@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Http\Controllers\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,6 +19,6 @@ class InvitationEmail extends Mailable
     public function build()
     {
         return $this->subject('Undangan Email')
-            ->view('emails.invitation');
+            ->view('invites.email');
     }
 }

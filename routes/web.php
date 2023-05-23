@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\GroupController;
 use App\http\Controllers\InviteController;
-use App\http\Controllers\Mail\invitationEmail;
+use App\Http\Controllers\Mail\InvitationEmail as MailInvitationEmail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +32,4 @@ Route::delete('/groups/{group}', [GroupController::class, 'delete'])->name('grou
 Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
 Route::get('/invites', [InviteController::class, 'showInviteForm'])->name('invites.form');
 Route::post('/invites', [InviteController::class, 'sendInvite'])->name('invite.send');
+Route::get('/invites', [MailInvitationEmail::class, 'build'])->name('invites.email');
