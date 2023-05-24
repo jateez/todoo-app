@@ -24,6 +24,7 @@ class TaskController extends Controller
         $task->name = $request->input('name');
         $task->description = $request->input('description');
         $task->priority = $request->input('priority');
+        $task->due_date = $request->input('due_date');
         $task->save();
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
@@ -39,6 +40,7 @@ class TaskController extends Controller
         $task->name = $request->input('name');
         $task->description = $request->input('description');
         $task->priority = $request->input('priority');
+        $task->due_date = $request->input('due_date');
         $task->save();
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');

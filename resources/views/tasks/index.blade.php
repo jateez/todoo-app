@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Task Manager</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -10,7 +10,7 @@
         <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
 
         @if(count($tasks) > 0)
-            <table class="table">
+            <table class="table styled-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -19,6 +19,7 @@
                         <th>Priority</th>
                         <th>Created At</th>
                         <th>Updated At</th>
+                        <th>Due Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                             <td>{{ $task->priority }}</td>
                             <td>{{ $task->created_at }}</td>
                             <td>{{ $task->updated_at }}</td>
+                            <td>{{ $task->due_date}}</td>
                             <td>
                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block">

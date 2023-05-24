@@ -26,6 +26,10 @@
                     <option value="Low" {{ $task->priority === 'Low' ? 'selected' : '' }}>Low</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="priority">Due Date</label>
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+            </div>
             <button type="submit" class="btn btn-primary">Update Task</button>
         </form>
     </div>
