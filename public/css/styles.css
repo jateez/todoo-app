@@ -51,51 +51,6 @@ a:hover {
     color: #fff;
 }
 
-/* Custom default button */
-.btn-default,
-.btn-default:hover,
-.btn-default:focus {
-    color: #333;
-    text-shadow: none; /* Prevent inheritence from `body` */
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #a71d2a;
-}
-
-/*
- * Base structure
- */
-
-html,
-body {
-    height: 100%;
-    background-color: #fff;
-}
-
 /*
  * Header
  */
