@@ -54,4 +54,14 @@ class GroupController extends Controller
 
         return redirect()->route('groups.index');
     }
+
+    public function generateUniqueCode()
+    {
+    $code = Str::random(8); // Menghasilkan kode unik dengan panjang 8 karakter
+    // memaastikan kode tersebut belum digunakan sebelumnya
+        while (Grup::where('group_code', $code)->exists()) {
+            $code = Str::random(8);
+        }
+    return $code;
+    }
 }
