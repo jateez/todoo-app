@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Task Manager</title>
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-</head>
-<body>
+@extends('layouts.app')
+@section('content')
     <div class="container">
-        <h1>Task Manager</h1>
+        <h1 class="text-center" >Task Manager</h1>
         <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
 
         @if(count($tasks) > 0)
@@ -49,5 +44,4 @@
             <p>No tasks found.</p>
         @endif
     </div>
-</body>
-</html>
+@endsection
