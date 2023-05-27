@@ -20,7 +20,56 @@
 <div class="container">
     <h1>{{ $group->name }}</h1>
     <p>{{ $group->description }}</p>
-    <p>Kode Grup: <span id="groupCode">{{ $group->group_code }}</span></p> 
+
+    <!-- ganti rute -->
+
+    <form action="">
+        @csrf
+        <div class="form-group">
+            nama
+        </div>
+        <div class="form-group">
+            deskripsi
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                priority
+            </div>
+            <div class="form-group col-md-5">
+                duedate
+            </div>
+            <div class="form-group col-md-2">
+                <button>submit</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- <form action="{{ route('tasks.store') }}" method="POST">
+            @csrf
+            <div class="form-group mt-3">
+                <label for="name">Task Name:</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+            <div class="form-group mt-3">
+                <label for="description">Description Task</label>
+                <textarea name="description" id="description" class="form-control"></textarea>
+            </div>
+            <div class="col">
+                <label for="priority">Priority Task</label>
+                <select name="priority" id="priority" class="form-control" required>
+                    <option value="Urgent">Urgent</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="priority">Due Date</label>
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Add Task</button>
+        </form> -->
+
+        <br><p>Kode Grup: <span id="groupCode">{{ $group->group_code }}</span></p> 
     <button onclick="copyGroupCode()">Copy</button> <br> <br>
     <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
                     @csrf
