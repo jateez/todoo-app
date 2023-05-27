@@ -12,7 +12,7 @@
     <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <form method="POST" action="{{ route('invite.send') }}">
+    <form method="POST" action="{{ route('invites.send') }}">
         @csrf
 
         <label for="email">Email:</label>
