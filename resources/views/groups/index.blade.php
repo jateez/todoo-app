@@ -25,6 +25,12 @@
                     @method('DELETE')
                     <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to delete this group?')">Delete</button>
                 </form>
+                <!-- tambahkan rute -->
+                <form method="POST" action="" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-light" type="submit" >Edit</button>
+                </form>
 </div>
 
 <a href=""></a>
