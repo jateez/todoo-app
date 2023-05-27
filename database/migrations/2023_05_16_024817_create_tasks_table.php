@@ -15,10 +15,11 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->string('name');
             $table->text('description')->nullable();
             $table->enum('priority', ['Urgent', 'Normal', 'Low'])->default('Normal');
             $table->timestamps();
+            $table->date('due_date');
         });
     }
 
