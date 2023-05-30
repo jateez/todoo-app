@@ -3,6 +3,16 @@
     <div class="container">
         <h1 class="text-center" >Task Manager</h1>
         <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
+        <div>
+            <form action="{{ route('tasks.index') }}" method="GET">
+                <label for="sort_by">Sort By : </label>
+                <select name="sort_by" id="sort_by">
+                    <option value="priority">Priority</option>
+                    <option value="due_date">Due Date</option>
+                </select>
+                <button type="submit">Confirm</button>
+            </form>
+        </div>
 
         @if(count($tasks) > 0)
             <table class="table styled-table">

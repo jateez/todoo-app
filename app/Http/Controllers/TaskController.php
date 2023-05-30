@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
+        $sortBy = $request->input('sort_by', 'priority');
+
+        if ($sortBy == 'priority') {
+            $tasks = Task::orderBy('priority', 'asc')->get();
+        } elseif ($sortBy == 'due_date') {
+            $tasks = Task::orderBy('due_date', 'asc')->get();
+        } else {
+            $tasks = Task::all();
+        }
+
         return view('tasks.index', compact('tasks'));
     }
 
