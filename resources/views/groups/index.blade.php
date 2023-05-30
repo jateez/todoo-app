@@ -23,7 +23,44 @@
 
     <!-- ganti rute -->
 
-    <form action="">
+    <form>
+  <!-- <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Password</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+    </div>
+  </div> -->
+  <div class="form-group">
+    <label for="name">Task Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Input task name here" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Task Description</label>
+    <input type="text" class="form-control" id="description" placeholder="Write task detail here">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="priority">Priority</label>
+      <select name="priority" id="priority" class="form-control" required>
+                    <option value="Urgent">Urgent</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Low">Low</option>
+                </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="due_date">State</label>
+      <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">+ Add Task</button>
+</form>
+
+    <!-- <form action="">
         @csrf
         <div class="form-group">
             nama
@@ -32,17 +69,17 @@
             deskripsi
         </div>
         <div class="form-row">
-            <div class="form-group col-md-5">
+            <div class="col-md-5">
                 priority
             </div>
-            <div class="form-group col-md-5">
+            <div class="col-md-5">
                 duedate
             </div>
-            <div class="form-group col-md-2">
+            <div class="col-md-2">
                 <button>submit</button>
             </div>
         </div>
-    </form>
+    </form> -->
 
     <!-- <form action="{{ route('tasks.store') }}" method="POST">
             @csrf
