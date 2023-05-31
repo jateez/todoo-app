@@ -170,7 +170,7 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         $user = Auth::user();
-
+        
         // Check if the authenticated user is the group creator
         if ($group->user_id !== $user->id) {
             return redirect()->back()->with('error', 'You do not have permission to delete this group.');

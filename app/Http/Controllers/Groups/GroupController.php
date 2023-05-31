@@ -29,10 +29,7 @@ class GroupController extends Controller
         return view('groups.create');
     }
 
-    public function joinForm()
-    {
-        return view('groups.joinForm');
-    }
+
 
     public function edit(Group $group)
     {
@@ -59,6 +56,11 @@ class GroupController extends Controller
 
         return redirect()->route('groups.show', $group)->with('success', 'Group description updated successfully.');
     }
+
+    public function joinForm()
+{
+    return view('groups.joinform');
+}
 
 
     public function join(Request $request)
@@ -113,9 +115,9 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
-        $groups = Group::all();
         $members = $group->users()->get();
-        return view('groups.show', compact('group', 'groups', 'members'));
+
+        return view('groups.show', compact('group', 'members'));
     }
 
 
@@ -134,7 +136,7 @@ class GroupController extends Controller
         /** @var \App\Models\User $user **/
         $user->save();
 
-        return redirect()->route('groups.index')->with('success', 'Left group successfully.');
+        return redirect()->route('home')->with('success', 'Left group successfully.');
     }
 
 
@@ -148,13 +150,14 @@ class GroupController extends Controller
         }
 
         // Detach all users from the group before deleting
-        // $group->users()->detach();
+        // $group->users()->delete();
 
         // Delete the group
         $group->delete();
 
-        return redirect()->route('groups.index')->with('success', 'Group deleted successfully.');
+        return redirect()->route('home')->with('success', 'Group deleted successfully.');
     }
+
 
     // public function delete(Group $group)
     // {

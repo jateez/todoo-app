@@ -19,9 +19,10 @@
             <a href="{{ route('groups.create') }}" class="btn btn-primary">
                 Create Group
             </a>
-            <a href="{{ route('groups.joinForm') }}" class="btn btn-primary">
+            <a href="{{ route('groups.joinform') }}" class="btn btn-primary">
                 Join Group
             </a>
+
             @endif
             @endauth
             @endif

@@ -45,9 +45,27 @@
     </form>
 
     <br>
+    @isset($group)
     <p>Kode Grup: <span id="groupCode">{{ $group->joincode }}</span></p>
+
+
     <button onclick="copyGroupCode()">Copy</button> <br> <br>
+
+    @if (Auth::user()->id === $group->user_id)
     <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to delete this group?')">Delete</button>
+    </form>
+    @else
+    <form method="POST" action="{{ route('groups.leave') }}" style="display: inline;">
+        @csrf
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to leave this group?')">Leave</button>
+    </form>
+    @endif
+
+
+    <!-- <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
         @csrf
         @method('DELETE')
         @if (Auth::user()->id === $group->user_id)
@@ -55,15 +73,16 @@
         @else
         <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to leave this group?')">Leave</button>
         @endif
-    </form>
-
-
+    </form> -->
+    @endisset
+    @isset($group)
     <!-- tambahkan rute -->
     <form method="POST" action="{{ route('groups.update', $group) }}" style="display: inline;">
         @csrf
         @method('PUT')
         <button class="btn btn-light" type="submit">Edit</button>
     </form>
+    @endisset
 
 </div>
 

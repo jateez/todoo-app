@@ -33,13 +33,17 @@ Route::delete('/groups/{group}', [GroupController::class, 'delete'])->name('grou
 Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
 Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('groups.edit');
 Route::put('/groups/{group}', [GroupController::class, 'update'])->name('groups.update');
+Route::post('/groups/leave', [GroupController::class, 'leave'])->name('groups.leave');
 
 
 
 
 //Join form
-Route::get('/groups/join', [GroupController::class, 'joinForm'])->name('groups.joinForm');
-Route::post('/groups/join', [GroupController::class, 'join'])->name('groups.join');
+// Route::get('/groups/join', [GroupController::class, 'joinForm'])->name('groups.joinForm');
+// Route::post('/groups/join', [GroupController::class, 'join'])->name('groups.join');
+
+Route::get('/joinform', [GroupController::class, 'joinForm'])->name('groups.joinform');
+Route::post('/join', [GroupController::class, 'join'])->name('groups.join');
 
 
 // Invites (ga kepake)
