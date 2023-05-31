@@ -9,12 +9,24 @@
             <img src="{{ asset('images/bunnies_logo.png') }}" alt="">
         </div>
         <div>
+            @if (Route::has('groups.index'))
+            @auth
+            @if (auth()->user()->group)
             <a href="{{ route('groups.index') }}" class="btn btn-primary">
-                View Group
+                View {{ auth()->user()->group->name }}
             </a>
+            @else
             <a href="{{ route('groups.create') }}" class="btn btn-primary">
                 Create Group
             </a>
+            <a href="{{ route('groups.joinForm') }}" class="btn btn-primary">
+                Join Group
+            </a>
+            @endif
+            @endauth
+            @endif
+
+
         </div>
     </div>
 </div>

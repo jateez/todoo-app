@@ -33,7 +33,22 @@
                             <a class="nav-link" aria-current="page" href="{{ route('tasks.index') }}">{{ config('app.name Task', 'Task') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('groups.index') }}">{{ config('app.name Groups', 'Groups') }}</a>
+                            <a class="nav-link" id="groups-link" href="{{ route('groups.index') }}">{{ config('app.name Groups', 'Groups') }}</a>
+
+                            @auth
+                            @if (!auth()->user()->group)
+                            <script>
+                                window.addEventListener('DOMContentLoaded', () => {
+                                    const groupsLink = document.getElementById('groups-link');
+                                    groupsLink.addEventListener('click', (event) => {
+                                        event.preventDefault();
+                                        alert('Kamu tidak bergabung dalam sebuah grup! Silakan buat atau bergabung dengan grup terlebih dahulu!');
+                                    });
+                                });
+                            </script>
+                            @endif
+                            @endauth
+
                         </li>
                     </ul>
 

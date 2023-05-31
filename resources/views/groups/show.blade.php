@@ -5,6 +5,9 @@
     <input type="submit" value="<-- Go Back" />
 </form>
 
-<form action="{{ route('invites.form') }}"> 
- <input type="submit" value="Send Invitation" />
+@if ($group->user_id === auth()->user()->id)
+<form method="GET" action="{{ route('groups.edit', $group) }}" style="display: inline;">
+    @csrf
+    <button class="btn btn-light" type="submit">Edit</button>
 </form>
+@endif

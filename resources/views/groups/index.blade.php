@@ -24,7 +24,7 @@
     <!-- ganti rute -->
 
     <form>
-  <!-- <div class="form-row">
+        <!-- <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Email</label>
       <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
@@ -34,31 +34,31 @@
       <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
     </div>
   </div> -->
-  <div class="form-group">
-    <label for="name">Task Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Input task name here" required>
-  </div>
-  <div class="form-group">
-    <label for="description">Task Description</label>
-    <input type="text" class="form-control" id="description" placeholder="Write task detail here">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="priority">Priority</label>
-      <select name="priority" id="priority" class="form-control" required>
+        <div class="form-group">
+            <label for="name">Task Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Input task name here" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Task Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Write task detail here">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="form-control" required>
                     <option value="Urgent">Urgent</option>
                     <option value="Normal">Normal</option>
                     <option value="Low">Low</option>
                 </select>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="due_date">State</label>
-      <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
-    </div>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary">+ Add Task</button>
-</form>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="due_date">State</label>
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">+ Add Task</button>
+    </form>
 
     <!-- <form action="">
         @csrf
@@ -106,19 +106,26 @@
             <button type="submit" class="btn btn-primary mt-3">Add Task</button>
         </form> -->
 
-        <br><p>Kode Grup: <span id="groupCode">{{ $group->group_code }}</span></p> 
+    <br>
+    <p>Kode Grup: <span id="groupCode">{{ $group->joincode }}</span></p>
     <button onclick="copyGroupCode()">Copy</button> <br> <br>
-    <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to delete this group?')">Delete</button>
-                </form>
-                <!-- tambahkan rute -->
-                <form method="POST" action="" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-light" type="submit" >Edit</button>
-                </form>
+    <form method="POST" action="{{ route('groups.destroy', $group) }}" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        @if (Auth::user()->id === $group->user_id)
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to delete this group?')">Delete</button>
+        @else
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to leave this group?')">Leave</button>
+        @endif
+    </form>
+
+    <!-- tambahkan rute -->
+    <form method="POST" action="{{ route('groups.update', $group) }}" style="display: inline;">
+        @csrf
+        @method('PUT')
+        <button class="btn btn-light" type="submit">Edit</button>
+    </form>
+
 </div>
 
 <a href=""></a>
