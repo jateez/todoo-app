@@ -1,6 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- @if (Auth::check()) -->
+<!-- Display authenticated user-specific content here -->
+<!-- @foreach ($groups as $group) -->
+<!-- <h1>{{ $group->name }}</h1> -->
+<!-- <p>{{ $group->description }}</p> -->
+<!-- @endforeach -->
+<!-- @else -->
+<!-- Display content for non-authenticated users here -->
+<!-- <p>Please log in to view the groups.</p> -->
+<!-- @endif -->
+
+
+// create task group dump
+<!-- <form action="{{ route('groups.store') }}" method="POST">
+        <div class="form-group">
+            <label for="name">Task Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Input task name here" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Task Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Write task detail here">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="form-control" placeholder="select priority" required>
+                    <option value="Urgent">Urgent</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="due_date">Due Date</label>
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $taskGroup->due_date ?? '' }}">
+            </div>
+            <br>
+            <form action="{{ route('taskGroup.store') }}" method="GET">
+                <button type="submit" class="btn btn-primary">+ Add Task</button>
+            </form>
+        </div>
+    </form> -->
+
+
+
+<!-- <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        @if (Auth::user()->id === $group->user_id)
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to delete this group?')">Delete</button>
+        @else
+        <button class="btn btn-outline-danger" type="submit" onclick="return confirm('Are you sure you want to leave this group?')">Leave</button>
+        @endif
+    </form> -->
+
 <!-- <div class="container">
     <h1>List Groups</h1>
     <ul>

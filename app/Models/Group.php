@@ -18,7 +18,7 @@ class Group extends Model
         'joincode',
         'user_id',
     ];
-    
+
     protected static function booted()
     {
         static::creating(function ($group) {
@@ -46,6 +46,11 @@ class Group extends Model
         }
 
         return $code;
+    }
+
+    public function taskGroups()
+    {
+        return $this->hasMany(TaskGroup::class);
     }
 }
 

@@ -13,8 +13,19 @@ class GroupController extends Controller
 {
     public function index()
     {
-        $groups = Group::all();
-        return view('groups.index', compact('groups'));
+        // Yang ini ngembaliin semua grup
+        // $groups = Group::all();
+        // return view('groups.index', compact('groups'));
+
+        $user = Auth::user();
+
+        if (!$user->group) {
+            return redirect()->route('home')->with('error', 'You do not have a group.');
+        }
+
+        $group = $user->group;
+
+        return view('groups.index', compact('group'));
     }
 
 
@@ -39,8 +50,11 @@ class GroupController extends Controller
         if ($group->user_id !== $user->id) {
             return redirect()->back()->with('error', 'You do not have permission to edit this group.');
         }
+        //New
+        return view('groups.edit', compact('group'));
+        //Old
+        // return view('groups.edit', compact('groups'));
 
-        return view('groups.edit', compact('groups'));
     }
 
     public function update(Request $request, Group $group)
@@ -58,21 +72,31 @@ class GroupController extends Controller
     }
 
     public function joinForm()
-{
-    return view('groups.joinform');
-}
+    {
+        return view('groups.joinform');
+    }
 
 
     public function join(Request $request)
     {
+
+
+
         $joincode = $request->input('joincode');
+
+
         $group = Group::where('joincode', $joincode)->first();
+
+        //check debug with dd
+        // dd($joincode, $group->id, 'Join method executed');
 
         if (!$group) {
             return redirect()->back()->with('error', 'Invalid join code.');
         }
 
         $user = Auth::user();
+        // check debug with dd
+        // dd($group->id,$user->id,$user->group_id,  'test');
 
         // Check if the user is already a member of a group
         if ($user->group_id) {
@@ -115,13 +139,16 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
-        $members = $group->users()->get();
+        //New
+        $members = $group->users;
+        // Old
+        // $members = $group->users()->get();
 
         return view('groups.show', compact('group', 'members'));
     }
 
 
-
+    //Leave group seperti biasa. regular member only
     public function leave()
     {
         $user = Auth::user();
@@ -139,7 +166,7 @@ class GroupController extends Controller
         return redirect()->route('home')->with('success', 'Left group successfully.');
     }
 
-
+    //Kick member kemudian menghapus group. Creator only
     public function delete(Group $group)
     {
         $user = Auth::user();
@@ -149,8 +176,8 @@ class GroupController extends Controller
             return redirect()->back()->with('error', 'You do not have permission to delete this group.');
         }
 
-        // Detach all users from the group before deleting
-        // $group->users()->delete();
+        // Remove the association between the group and its users
+        $group->users()->update(['group_id' => null]);
 
         // Delete the group
         $group->delete();
@@ -158,7 +185,25 @@ class GroupController extends Controller
         return redirect()->route('home')->with('success', 'Group deleted successfully.');
     }
 
+    //Menampilkan list member
+    public function showMembers()
+    {
+        $user = Auth::user();
+        $group = $user->group;
 
+        if (!$group) {
+            return redirect()->route('groups.index')->with('error', 'You are not a member of any group.');
+        }
+
+        $members = $group->users;
+        $showMembers = true;
+
+        return view('groups.index', compact('group', 'members', 'showMembers'));
+    }
+
+
+
+    //Gak kepake
     // public function delete(Group $group)
     // {
     //     // Detach all users from the group before deleting

@@ -161,6 +161,7 @@ class GroupController extends Controller
         // Disassociate the user from the group
         $user->group_id = null;
         /** @var \App\Models\User $user **/
+        $user->group()->dissociate();
         $user->save();
 
         return redirect()->route('groups.index')->with('success', 'Left group successfully.');
@@ -170,7 +171,7 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         $user = Auth::user();
-        
+
         // Check if the authenticated user is the group creator
         if ($group->user_id !== $user->id) {
             return redirect()->back()->with('error', 'You do not have permission to delete this group.');
