@@ -43,7 +43,7 @@ class GroupController extends Controller
             return redirect()->back()->with('error', 'You do not have permission to edit this group.');
         }
 
-        return view('groups.edit', compact('groups'));
+        return view('groups.edit', compact('group'));
     }
 
     public function update(Request $request, Group $group)
@@ -111,6 +111,25 @@ class GroupController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     $group = Group::create([
+    //         'name' => $request->input('name'),
+    //         'description' => $request->input('description'),
+    //     ]);
+
+    //     $usernames = $request->input('usernames');
+
+    //     if (!empty($usernames) && is_array($usernames)) {
+    //         foreach ($usernames as $username) {
+    //             $user = User::where('username', $username)->firstOrFail();
+    //             $group->users()->attach($user->id);
+    //         }
+    //     }
+
+    //     return redirect()->route('groups.index');
+    // }
+
     public function show(Group $group)
     {
         $groups = Group::all();
@@ -119,6 +138,16 @@ class GroupController extends Controller
     }
 
 
+    // public function delete(Group $group)
+    // {
+    //     // Detach all users from the group before deleting
+    //     // $group->users()->detach();
+
+    //     // Delete the group
+    //     $group->delete();
+
+    //     return redirect()->route('groups.index');
+    // }
 
     public function leave()
     {
@@ -138,7 +167,7 @@ class GroupController extends Controller
     }
 
 
-    public function delete(Group $group)
+    public function destroy(Group $group)
     {
         $user = Auth::user();
 
@@ -148,7 +177,7 @@ class GroupController extends Controller
         }
 
         // Detach all users from the group before deleting
-        // $group->users()->detach();
+        $group->users()->detach();
 
         // Delete the group
         $group->delete();
@@ -156,18 +185,19 @@ class GroupController extends Controller
         return redirect()->route('groups.index')->with('success', 'Group deleted successfully.');
     }
 
-    // public function delete(Group $group)
+
+
+    // Arya Comment karena udah automically lewat groupModel
+
+    // public function generateUniqueCode()
     // {
-    //     // Detach all users from the group before deleting
-    //     // $group->users()->detach();
-
-    //     // Delete the group
-    //     $group->delete();
-
-    //     return redirect()->route('groups.index');
+    // $code = Str::random(8); // Menghasilkan kode unik dengan panjang 8 karakter
+    // // memaastikan kode tersebut belum digunakan sebelumnya
+    //     while (Grup::where('group_code', $code)->exists()) {
+    //         $code = Str::random(8);
+    //     }
+    // return $code;
     // }
-
-
 
 
 
