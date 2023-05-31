@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="container">
     @if (Auth::check())
     <!-- Display authenticated user-specific content here -->
@@ -17,7 +18,7 @@
 
 
 
-    <form>
+    <form action="{{ route('groups.store') }}" method="POST">
         <div class="form-group">
             <label for="name">Task Name</label>
             <input type="text" class="form-control" id="name" placeholder="Input task name here" required>
@@ -37,13 +38,54 @@
             </div>
             <div class="form-group col-md-4">
                 <label for="due_date">Due Date</label>
-                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $taskGroup->due_date ?? '' }}">
             </div>
+            <br>
+            <button type="submit" class="btn btn-primary">+ Add Task</button>
         </div>
-        <br>
-        <button type="submit" class="btn btn-primary">+ Add Task</button>
     </form>
 
+    <!-- menampilkan tasks group -->
+    @if(count($taskGroup) > 0)
+            <table class="table styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($taskGroup as $taskGroup)
+                        <tr>
+                            <td>{{ $taskGroup->id }}</td>
+                            <td>{{ $taskGroup->name }}</td>
+                            <td>{{ $taskGroup->description }}</td>
+                            <td>{{ $taskGroup->priority }}</td>
+                            <td>{{ $taskGroup->created_at }}</td>
+                            <td>{{ $taskGroup->updated_at }}</td>
+                            <td>{{ $taskGroup->due_date}}</td>
+                            <td>
+                                <a href="{{ route('taskGroup.edit', $taskGroup->id) }}" class="btn btn-primary">Edit</a>
+                                <form action="{{ route('taskGroup.destroy', $taskGroup->id) }}" method="POST" style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>No tasks found.</p>
+        @endif
+        <!-- menampilkan tasks group -->
     <br>
     @isset($group)
     <p>Kode Grup: <span id="groupCode">{{ $group->joincode }}</span></p>
