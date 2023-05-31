@@ -1,21 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Buat Grup Baru</h1>
+<div class="container">
+<h1>Create New Group</h1>
 
 <form action="{{ route('groups.store') }}" method="POST">
     @csrf
-
     <div>
         <label for="name">Group Name:</label>
-        <input type="text" name="name" id="name" required>
-        <br> <br>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Input group name here" required>
+        <br>
         <label for="description">Group Description:</label>
         <br>
-        <textarea name="description" id="description" rows="4" required></textarea>
+        <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
     </div>
     <br>
-    <button type="submit">Buat Grup</button>
+    <button class="btn btn-primary" type="submit">Buat Grup</button>
 </form>
-<br><br>
+<br><br>    
+</div>
+
 @endsection

@@ -29,14 +29,14 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="priority">Priority</label>
-                <select name="priority" id="priority" class="form-control" required>
+                <select name="priority" id="priority" class="form-control" placeholder="select priority" required>
                     <option value="Urgent">Urgent</option>
                     <option value="Normal">Normal</option>
                     <option value="Low">Low</option>
                 </select>
             </div>
             <div class="form-group col-md-4">
-                <label for="due_date">State</label>
+                <label for="due_date">Due Date</label>
                 <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
             </div>
         </div>
