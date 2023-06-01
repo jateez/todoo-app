@@ -45,9 +45,9 @@
             <div class="form-group col-md-4">
                 <label for="priority">Priority</label>
                 <select name="priority" id="priority" class="form-control" required>
-                    <option value="Urgent">Urgent</option>
-                    <option value="Normal">Normal</option>
-                    <option value="Low">Low</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
                 </select>
             </div>
             <div class="form-group col-md-4">
@@ -60,6 +60,16 @@
         </div>
         <button type="submit" class="btn btn-primary">Add Task</button>
     </form>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
 

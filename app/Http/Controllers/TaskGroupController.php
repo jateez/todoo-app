@@ -43,6 +43,7 @@ class TaskGroupController extends Controller
             'description' => $request->input('description'),
             'priority' => $request->input('priority'),
             'due_date' => $request->input('due_date'),
+            'group_id' => auth()->user()->group_id
         ]);
 
         //Old
