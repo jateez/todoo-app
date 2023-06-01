@@ -15,7 +15,7 @@
         <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
     </div>
     <br>
-    <button class="btn btn-primary" type="submit">Buat Grup</button>
+    <button class="btn btn-primary" type="submit">Create New Group</button>
 </form>
 <br><br>    
 </div>

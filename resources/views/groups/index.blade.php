@@ -142,7 +142,7 @@
     @endisset
     @isset($group)
     <!-- tambahkan rute -->
-    <form method="POST" action="{{ route('groups.update', $group) }}" style="display: inline;">
+    <form method="POST" action="{{ route('groups.edit', $group) }}" style="display: inline;">
         @csrf
         @method('PUT')
         <button class="btn btn-light" type="submit">Edit</button>

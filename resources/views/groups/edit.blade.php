@@ -1,11 +1,23 @@
-<form method="POST" action="{{ route('groups.update', $group) }}">
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+<h1>Edit Group</h1>
+
+<form action="{{ route('groups.update') }}" method="POST">
     @csrf
-    @method('PUT')
-
-    <div class="form-group">
-        <label for="description">Group Description</label>
-        <textarea class="form-control" id="description" name="description" rows="3">{{ $group->description }}</textarea>
+    <div>
+        <label for="name">Group Name:</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Input new group name here" required>
+        <br>
+        <label for="description">Group Description:</label>
+        <br>
+        <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
     </div>
-
-    <button type="submit" class="btn btn-primary">Update</button>
+    <br>
+    <button class="btn btn-primary" type="submit">Edit Group</button>
 </form>
+<br><br>    
+</div>
+
+@endsection
