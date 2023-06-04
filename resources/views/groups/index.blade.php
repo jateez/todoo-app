@@ -26,13 +26,20 @@
         <div id="groupMembers" style="display: none;">
             <h3>Group Members:</h3>
             <ul>
-                @foreach($group->creator->group->users as $member)
-                <li>{{ $member->name }}</li>
+                @foreach($group->users as $member)
+                <li>{{ $member->name }}
+                    @if ($group->user_id === auth()->user()->id && $member->id !== $group->user_id)
+                    <form method="POST" action="{{ route('groups.kickMember', ['group' => $group->id, 'member' => $member->id]) }}" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Kick</button>
+                    </form>
+                    @endif
+                </li>
                 @endforeach
             </ul>
         </div>
         @endif
-
     </div>
 
     <!-- Old -->
@@ -101,6 +108,17 @@
     </div>
     @endif
 
+    <!-- Sort by for Tasks -->
+    <div>
+        <form action="{{ route('groups.index') }}" method="GET">
+            <label for="sort_by">Sort By:</label>
+            <select name="sort_by" id="sort_by">
+                <option value="priority" {{ request('sort_by') == 'priority' ? 'selected' : '' }}>Priority</option>
+                <option value="due_date" {{ request('sort_by') == 'due_date' ? 'selected' : '' }}>Due Date</option>
+            </select>
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
 
 
 

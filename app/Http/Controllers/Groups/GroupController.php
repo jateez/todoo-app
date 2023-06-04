@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class GroupController extends Controller
 {
-
-    //New
+    //Newest untuk sort by
     public function index(TaskGroupController $taskGroupController)
     {
         $user = Auth::user();
@@ -24,10 +23,27 @@ class GroupController extends Controller
         }
 
         $group = $user->group;
-        $taskGroup = $taskGroupController->index();
+
+        $sortBy = request()->input('sort_by', 'priority');
+
+        $taskGroup = $taskGroupController->index($sortBy);
 
         return view('groups.index', compact('group', 'taskGroup'));
     }
+    // //New ONLY DELETE IF THE SORT BY FUNCTION WORKS
+    // public function index(TaskGroupController $taskGroupController)
+    // {
+    //     $user = Auth::user();
+
+    //     if (!$user->group) {
+    //         return redirect()->route('home')->with('error', 'You do not have a group.');
+    //     }
+
+    //     $group = $user->group;
+    //     $taskGroup = $taskGroupController->index();
+
+    //     return view('groups.index', compact('group', 'taskGroup'));
+    // }
 
 
     // Old
@@ -90,7 +106,7 @@ class GroupController extends Controller
         $group->update($validatedData);
 
         // Flash the success message
-        Session::flash('success', 'Group information updated successfully.'); 
+        Session::flash('success', 'Group information updated successfully.');
 
         return redirect()->route('groups.index');
     }
@@ -185,6 +201,34 @@ class GroupController extends Controller
         return redirect()->route('home')->with('success', 'Left group successfully.');
     }
 
+    public function kickMember(Group $group, User $member)
+    {
+        $user = Auth::user();
+
+        // Check if the authenticated user is the group creator
+        if ($group->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'You do not have permission to kick members from this group.');
+        }
+
+        // Check if the member is actually part of the group
+        if (!$group->users->contains($member)) {
+            return redirect()->back()->with('error', 'The selected member does not belong to this group.');
+        }
+
+        // Check if the member is the group creator
+        if ($member->id === $group->user_id) {
+            return redirect()->back()->with('error', 'You cannot kick the group creator.');
+        }
+
+        // Disassociate the member from the group
+        $member->group_id = null;
+        $member->save();
+
+        return redirect()->back()->with('success', 'Member kicked successfully.');
+    }
+
+
+
     //Kick member kemudian menghapus group. Creator only
     public function delete(Group $group)
     {
@@ -219,5 +263,4 @@ class GroupController extends Controller
 
         return view('groups.index', compact('group', 'members', 'showMembers'));
     }
-
 }

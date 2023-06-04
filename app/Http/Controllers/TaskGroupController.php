@@ -8,23 +8,39 @@ use Illuminate\Http\Request;
 class TaskGroupController extends Controller
 {
 
-    // New
-    public function index()
+    //Newest
+    public function index($sortBy)
     {
-
-        // Modify the logic to retrieve the task group data
-        $sortBy = request()->input('sort_by', 'priority');
+        $query = TaskGroup::query();
 
         if ($sortBy == 'priority') {
-            $taskGroup = TaskGroup::orderBy('priority', 'asc')->get();
+            $query->orderBy('priority', 'asc');
         } elseif ($sortBy == 'due_date') {
-            $taskGroup = TaskGroup::orderBy('due_date', 'asc')->get();
-        } else {
-            $taskGroup = TaskGroup::all();
+            $query->orderBy('due_date', 'asc');
         }
+
+        $taskGroup = $query->get();
 
         return $taskGroup;
     }
+
+
+    // New ONLY DELETE IF SORT BY FUNCTIONS WORKS
+    // public function index()
+    // {
+    //     // Modify the logic to retrieve the task group data
+    //     $sortBy = request()->input('sort_by', 'priority');
+
+    //     if ($sortBy == 'priority') {
+    //         $taskGroup = TaskGroup::orderBy('priority', 'asc')->get();
+    //     } elseif ($sortBy == 'due_date') {
+    //         $taskGroup = TaskGroup::orderBy('due_date', 'asc')->get();
+    //     } else {
+    //         $taskGroup = TaskGroup::all();
+    //     }
+
+    //     return $taskGroup;
+    // }
 
     // Old
     // public function index(Request $request)

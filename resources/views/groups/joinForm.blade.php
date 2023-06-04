@@ -8,6 +8,11 @@
 </div>
 @endif
 
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+
 
 <div class="container">
     <h1>Join Group by Entering Code</h1>
