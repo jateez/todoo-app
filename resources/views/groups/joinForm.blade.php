@@ -2,6 +2,13 @@
 
 @section('content')
 
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
+
 <div class="container">
     <h1>Join Group by Entering Code</h1>
     <form action="{{ route('groups.join') }}" method="POST">

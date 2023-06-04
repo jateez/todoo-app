@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Groups;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Group;
+use App\Http\Controllers\TaskGroupController;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 class GroupController extends Controller
 {
-    public function index()
-    {
-        // Yang ini ngembaliin semua grup
-        // $groups = Group::all();
-        // return view('groups.index', compact('groups'));
 
+    //New
+    public function index(TaskGroupController $taskGroupController)
+    {
         $user = Auth::user();
 
         if (!$user->group) {
@@ -24,9 +24,29 @@ class GroupController extends Controller
         }
 
         $group = $user->group;
+        $taskGroup = $taskGroupController->index();
 
-        return view('groups.index', compact('group'));
+        return view('groups.index', compact('group', 'taskGroup'));
     }
+
+
+    // Old
+    // public function index()
+    // {
+    //     // Yang ini ngembaliin semua grup
+    //     // $groups = Group::all();
+    //     // return view('groups.index', compact('groups'));
+
+    //     $user = Auth::user();
+
+    //     if (!$user->group) {
+    //         return redirect()->route('home')->with('error', 'You do not have a group.');
+    //     }
+
+    //     $group = $user->group;
+
+    //     return view('groups.index', compact('group'));
+    // }
 
 
     public function create()
@@ -41,20 +61,16 @@ class GroupController extends Controller
     }
 
 
-
     public function edit(Group $group)
     {
         $user = auth()->user();
 
         // Check if the authenticated user is the group creator
         if ($group->user_id !== $user->id) {
-            return redirect()->back()->with('error', 'You do not have permission to edit this group.');
+            return redirect()->route('groups.index')->with('error', 'You do not have permission to edit this group since you are not the creator.');
         }
-        //New
-        return view('groups.edit', compact('group'));
-        //Old
-        // return view('groups.edit', compact('groups'));
 
+        return view('groups.edit', compact('group'));
     }
 
     public function update(Request $request, Group $group)
@@ -64,12 +80,23 @@ class GroupController extends Controller
             return redirect()->back()->with('error', 'You do not have permission to update this group.');
         }
 
-        $group->update([
-            'description' => $request->input('description'),
+        // Validate the form data
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
         ]);
 
-        return redirect()->route('groups.show', $group)->with('success', 'Group description updated successfully.');
+        // Update the group with the validated data
+        $group->update($validatedData);
+
+        // Flash the success message
+        Session::flash('success', 'Group information updated successfully.'); 
+
+        return redirect()->route('groups.index');
     }
+
+
+
 
     public function joinForm()
     {
@@ -80,23 +107,16 @@ class GroupController extends Controller
     public function join(Request $request)
     {
 
-
-
         $joincode = $request->input('joincode');
 
 
         $group = Group::where('joincode', $joincode)->first();
 
-        //check debug with dd
-        // dd($joincode, $group->id, 'Join method executed');
-
         if (!$group) {
-            return redirect()->back()->with('error', 'Invalid join code.');
+            return redirect()->back()->withErrors(['error' => 'Invalid join code.']);
         }
 
         $user = Auth::user();
-        // check debug with dd
-        // dd($group->id,$user->id,$user->group_id,  'test');
 
         // Check if the user is already a member of a group
         if ($user->group_id) {
@@ -146,7 +166,6 @@ class GroupController extends Controller
 
         return view('groups.show', compact('group', 'members'));
     }
-
 
     //Leave group seperti biasa. regular member only
     public function leave()
@@ -200,23 +219,5 @@ class GroupController extends Controller
 
         return view('groups.index', compact('group', 'members', 'showMembers'));
     }
-
-
-
-    //Gak kepake
-    // public function delete(Group $group)
-    // {
-    //     // Detach all users from the group before deleting
-    //     // $group->users()->detach();
-
-    //     // Delete the group
-    //     $group->delete();
-
-    //     return redirect()->route('groups.index');
-    // }
-
-
-
-
 
 }

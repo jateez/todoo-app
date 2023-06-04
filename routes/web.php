@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\Groups\GroupController;
-use App\http\Controllers\InviteController;
+use App\Http\Controllers\Groups\GroupController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\Mail\InvitationEmail as MailInvitationEmail;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskGroupController;
@@ -26,27 +26,29 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Task Groups
+Route::middleware('auth')->group(function () {
+    Route::get('/groups/{group}/tasks', [TaskGroupController::class, 'index'])->name('taskgroups.index');
+    Route::post('/groups/{group}/tasks', [TaskGroupController::class, 'store'])->name('taskgroups.store');
+    Route::get('/groups/{group}/tasks/{task}/edit', [TaskGroupController::class, 'editTask'])->name('taskgroups.editTask');
+    Route::put('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'update'])->name('taskgroups.update');
+    Route::delete('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'destroy'])->name('taskgroups.destroy');
+});
+
+//Ubah Routing
 // Groups (Added middleware auth, kalau error dihapus aja)
 Route::middleware('auth')->group(function () {
     Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
     Route::get('/groups/create', [GroupController::class, 'create'])->name('groups.create');
     Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
     Route::delete('/groups/{group}', [GroupController::class, 'delete'])->name('groups.delete');
-    Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
     Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('groups.edit');
     Route::put('/groups/{group}', [GroupController::class, 'update'])->name('groups.update');
-    Route::post('/groups/leave', [GroupController::class, 'leave'])->name('groups.leave');
     Route::get('/groups/{group}/members', [GroupController::class, 'showMembers'])->name('groups.showMembers');
+    Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.show');
+    Route::post('/groups/leave', [GroupController::class, 'leave'])->name('groups.leave');
 });
 
-//Task Groups
-Route::middleware('auth')->group(function () {
-    Route::get('/groups/{group}/tasks', [TaskGroupController::class, 'index'])->name('taskgroups.index');
-    Route::post('/groups/{group}/tasks', [TaskGroupController::class, 'store'])->name('taskgroups.store');
-    Route::get('/groups/{group}/tasks/{task}/edit', [TaskGroupController::class, 'edit'])->name('taskgroups.edit');
-    Route::put('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'update'])->name('taskgroups.update');
-    Route::delete('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'destroy'])->name('taskgroups.destroy');
-});
 
 
 //Join form
