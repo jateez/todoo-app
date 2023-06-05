@@ -140,6 +140,7 @@
         </thead>
         <tbody>
             @foreach($taskGroup as $task)
+            @if(!$task->hasFinished || ($task->hasFinished && $task->due_date >= now()->format('Y-m-d')))
             <tr>
                 <!-- <td>{{ $task->id }}</td> -->
                 <td>{{ $task->name }}</td>
@@ -159,11 +160,12 @@
                 <td>
                     <form action="{{ route('taskgroups.markAsDone', ['group' => $group->id, 'task' => $task->id]) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success">Mark as Done</button>
+                        <input type="checkbox" name="done" onchange="this.form.submit()" {{ $task->hasFinished ? 'checked' : '' }}>
                     </form>
                 </td>
 
             </tr>
+            @endif
             @endforeach
         </tbody>
     </table>
@@ -173,7 +175,7 @@
 
     <br><br><br>
 
-    
+
     @if(isset($finishedTaskGroups) && count($finishedTaskGroups) > 0)
     <h2>Finished Tasks</h2>
     <table class="table styled-table">

@@ -148,7 +148,7 @@ class TaskGroupController extends Controller
         $taskGroup = TaskGroup::where('group_id', $group)->findOrFail($task);
 
         // Update the hasFinished status
-        $taskGroup->hasFinished = true;
+        $taskGroup->hasFinished = !$taskGroup->hasFinished;
         $taskGroup->save();
 
         return redirect()->route('groups.index')->with('success', 'Task marked as done.');
