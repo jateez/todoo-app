@@ -135,6 +135,7 @@
                 <th>Updated At</th>
                 <th>Due Date</th>
                 <th>Actions</th>
+                <th>Mark as Done</th>
             </tr>
         </thead>
         <tbody>
@@ -155,6 +156,13 @@
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
+                <td>
+                    <form action="{{ route('taskgroups.markAsDone', ['group' => $group->id, 'task' => $task->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Mark as Done</button>
+                    </form>
+                </td>
+
             </tr>
             @endforeach
         </tbody>
@@ -163,6 +171,47 @@
     <p>No tasks found.</p>
     @endif
 
+    <br><br><br>
+
+    
+    @if(isset($finishedTaskGroups) && count($finishedTaskGroups) > 0)
+    <h2>Finished Tasks</h2>
+    <table class="table styled-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+            $taskCount = 0;
+            @endphp
+            @foreach($finishedTaskGroups as $finishedTask)
+            @php
+            $taskCount++;
+            @endphp
+            <tr id="taskRow{{$taskCount}}" {!! $taskCount> 5 ? 'style="display: none;"' : '' !!}>
+                <td>{{ $finishedTask->name }}</td>
+                <td>{{ $finishedTask->description }}</td>
+                <td>{{ $finishedTask->priority }}</td>
+                <td>{{ $finishedTask->created_at }}</td>
+                <td>{{ $finishedTask->updated_at }}</td>
+                <td>{{ $finishedTask->due_date }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @if(count($finishedTaskGroups) > 5)
+    <button id="showMoreButton" class="btn btn-primary">Show More</button>
+    @endif
+    @else
+    <p>No finished tasks found.</p>
+    @endif
 
 
     <!-- menampilkan tasks group -->
@@ -206,9 +255,31 @@
 
 </div>
 
-<a href=""></a>
-
 <script>
+    var showMoreButton = document.getElementById('showMoreButton');
+    var taskRows = document.querySelectorAll('[id^="taskRow"]');
+    var isShowingMore = false;
+
+    for (var i = 6; i <= taskRows.length; i++) {
+        taskRows[i - 1].style.display = 'none';
+    }
+
+    showMoreButton.addEventListener('click', function() {
+        if (isShowingMore) {
+            for (var i = 6; i <= taskRows.length; i++) {
+                taskRows[i - 1].style.display = 'none';
+            }
+            showMoreButton.textContent = 'Show More';
+            isShowingMore = false;
+        } else {
+            for (var i = 6; i <= taskRows.length; i++) {
+                taskRows[i - 1].style.display = 'table-row';
+            }
+            showMoreButton.textContent = 'Show Less';
+            isShowingMore = true;
+        }
+    });
+
     function toggleMembersList() {
         var membersList = document.getElementById('groupMembers');
         var button = document.querySelector('button');

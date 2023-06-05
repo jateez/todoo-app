@@ -141,4 +141,16 @@ class TaskGroupController extends Controller
 
         return redirect()->route('groups.index')->with('success', 'Task deleted successfully.');
     }
+
+    public function markAsDone(Request $request, $group, $task)
+    {
+        // Find the task group by its ID
+        $taskGroup = TaskGroup::where('group_id', $group)->findOrFail($task);
+
+        // Update the hasFinished status
+        $taskGroup->hasFinished = true;
+        $taskGroup->save();
+
+        return redirect()->route('groups.index')->with('success', 'Task marked as done.');
+    }
 }

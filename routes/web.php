@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/{group}/tasks/{task}/edit', [TaskGroupController::class, 'editTask'])->name('taskgroups.editTask');
     Route::put('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'update'])->name('taskgroups.update');
     Route::delete('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'destroy'])->name('taskgroups.destroy');
+    Route::post('/groups/{group}/tasks/{task}/mark-as-done', [TaskGroupController::class, 'markAsDone'])->name('taskgroups.markAsDone');
 });
 
 //Ubah Routing
