@@ -3,16 +3,18 @@
     <div class="container">
         <h1 class="text-center" >Task Manager</h1>
         <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
-        <div>
-            <form action="{{ route('tasks.index') }}" method="GET">
-                <label for="sort_by">Sort By : </label>
-                <select name="sort_by" id="sort_by">
-                    <option value="priority">Priority</option>
-                    <option value="due_date">Due Date</option>
-                </select>
-                <button type="submit">Confirm</button>
-            </form>
+        <div class="dropdown" style="float:right">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort By
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                <li><a class="dropdown-item" href="{{ route('tasks.index', ['sort_by' => 'priority']) }}">Priority</a></li>
+                <li><a class="dropdown-item" href="{{ route('tasks.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
+            </ul>
         </div>
+
+
+
 
         @if(count($tasks) > 0)
             <table class="table styled-table">
@@ -39,11 +41,11 @@
                             <td>{{ $task->updated_at }}</td>
                             <td>{{ $task->due_date}}</td>
                             <td>
-                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-outline-primary">Edit</a>
                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
