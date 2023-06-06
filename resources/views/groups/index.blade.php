@@ -51,8 +51,8 @@
         <div class="col-md-6">
             <div style="display: flex; align-items: center;">
                 <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
-                <p>Code Group : </p>
-                <p id="groupCode">{{ $group->joincode }}</p>
+                <p class="mt-3">Code Group : </p>
+                <p class="mt-3 ms-2" id="groupCode">{{ $group->joincode }}</p>
                 <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
             </div>
 

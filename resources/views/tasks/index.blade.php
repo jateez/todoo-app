@@ -52,11 +52,11 @@
                         <td>{{ $task->updated_at }}</td>
                         <td>{{ $task->due_date}}</td>
                         <td>
-                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                             </form>
                         </td>
                         <td>
