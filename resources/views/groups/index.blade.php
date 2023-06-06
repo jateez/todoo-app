@@ -25,7 +25,7 @@
             <p>{{ $group->description }}</p>
             <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
                 @csrf
-                <button type="button" class="btn btn-outline-secondary" onclick="toggleMembersList()">Show Group Members</button>
+                <button type="button" class="btn btn-outline-primary" onclick="toggleMembersList()">Show Group Members</button>
             </form>
 
             <div id="groupMembers" style="display: none;">
@@ -53,13 +53,13 @@
                 <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
                 <p class="mt-3 d-none">Code Group : </p>
                 <p class="mt-3 ms-2 d-none" id="groupCode">{{ $group->joincode }}</p>
-                <button class="btn btn-outline-secondary mt-6 mb-3" onclick="copyGroupCode()">Code Group : {{ $group->joincode }}</button>
+                <button class="btn btn-outline-primary mt-6 mb-3" onclick="copyGroupCode()">Code Group : {{ $group->joincode }}</button>
             </div>
 
             <div id="editGroup">
                 <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
                     @csrf
-                    <button class="btn btn-outline-secondary" type="submit">Edit Group</button>
+                    <button class="btn btn-outline-primary" type="submit">Edit Group</button>
                 </form>
             </div>
 

@@ -7,23 +7,38 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
+    
     public function index(Request $request)
-    {
-        $sortBy = $request->input('sort_by', 'priority');
+{
+    $user_id = auth()->user()->id;
+    $sortBy = $request->input('sort_by', 'priority');
 
-        if ($sortBy == 'priority') {
-            $tasksInProgress = Task::where('completed', false)->orderBy('priority', 'asc')->get();
-            $completedTasks = Task::where('completed', true)->orderBy('priority', 'asc')->get();
-        } elseif ($sortBy == 'due_date') {
-            $tasksInProgress = Task::where('completed', false)->orderBy('due_date', 'asc')->get();
-            $completedTasks = Task::where('completed', true)->orderBy('due_date', 'asc')->get();
-        } else {
-            $tasksInProgress = Task::where('completed', false)->get();
-            $completedTasks = Task::where('completed', true)->get();
-        }
-
-        return view('tasks.index', compact('tasksInProgress', 'completedTasks', 'sortBy'));
+    if ($sortBy == 'priority') {
+        $tasksInProgress = Task::where('completed', false)
+            ->where('user_id', $user_id)
+            ->orderBy('priority', 'asc')->get();
+        $completedTasks = Task::where('completed', true)
+            ->where('user_id', $user_id)
+            ->orderBy('priority', 'asc')->get();
+    } elseif ($sortBy == 'due_date') {
+        $tasksInProgress = Task::where('completed', false)
+            ->where('user_id', $user_id)
+            ->orderBy('due_date', 'asc')->get();
+        $completedTasks = Task::where('completed', true)
+            ->where('user_id', $user_id)
+            ->orderBy('due_date', 'asc')->get();
+    } else {
+        $tasksInProgress = Task::where('completed', false)
+            ->where('user_id', $user_id)
+            ->get();
+        $completedTasks = Task::where('completed', true)
+            ->where('user_id', $user_id)
+            ->get();
     }
+
+    return view('tasks.index', compact('tasksInProgress', 'completedTasks', 'sortBy'));
+}
 
     public function create()
     {
@@ -32,13 +47,13 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $task = new Task;
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
-        $task->priority = $request->input('priority');
-        $task->due_date = $request->input('due_date');
-        $task->completed = false;
-        $task->save();
+        $task = Task::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'priority' => $request->input('priority'),
+            'due_date' => $request->input('due_date'),
+            'user_id' => auth()->user()->id
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
