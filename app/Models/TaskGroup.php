@@ -16,7 +16,8 @@ class TaskGroup extends Model
         'description',
         'priority',
         'due_date',
-        'group_id', 
+        'group_id',
+        'hasFinished',
     ];
 
     public function group()
