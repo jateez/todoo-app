@@ -163,7 +163,7 @@
                     <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
                 </ul>
             </div>
-            <div class="sort-info mt-3">
+            <div class="sort-info mt-3 mb-3">
                 @if(request('sort_by') == "priority")
                 <span class="badge bg-primary">Priority</span>
                 @elseif(request('sort_by') == "due_date")

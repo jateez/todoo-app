@@ -98,8 +98,15 @@ class TaskGroupController extends Controller
     public function editTask($group, $task)
     {
         $taskGroup = TaskGroup::findOrFail($task);
+
+        // Check if the authenticated user is the creator of the task group
+        if ($taskGroup->group->user_id !== auth()->id()) {
+            return redirect()->route('groups.index')->with('error', 'You do not have permission to edit this task.');
+        }
+
         return view('groups.editTask', compact('taskGroup'));
     }
+
 
 
     public function update(Request $request, $group, $task)
@@ -137,12 +144,18 @@ class TaskGroupController extends Controller
 
     public function destroy($group, $task)
     {
-        // Retrieve the task group and perform the delete operation
         $taskGroup = TaskGroup::findOrFail($task);
+
+        // Check if the authenticated user is the creator of the task group
+        if ($taskGroup->group->user_id !== auth()->id()) {
+            return redirect()->route('groups.index')->with('error', 'You do not have permission to delete this task.');
+        }
+
         $taskGroup->delete();
 
         return redirect()->route('groups.index')->with('success', 'Task deleted successfully.');
     }
+
 
     public function markAsDone(Request $request, $group, $task)
     {
