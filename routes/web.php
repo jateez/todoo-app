@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/{group}/tasks/{task}/edit', [TaskGroupController::class, 'editTask'])->name('taskgroups.editTask');
     Route::put('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'update'])->name('taskgroups.update');
     Route::delete('/groups/{group}/tasks/{task}', [TaskGroupController::class, 'destroy'])->name('taskgroups.destroy');
+    Route::post('/groups/{group}/tasks/{task}/mark-as-done', [TaskGroupController::class, 'markAsDone'])->name('taskgroups.markAsDone');
 });
 
 //Ubah Routing
@@ -69,4 +70,6 @@ Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
+Route::post('/tasks/{task}/inProgress', [TaskController::class, 'inProgressTask'])->name('tasks.inProgress');
 Route::resource('tasks', TaskController::class);

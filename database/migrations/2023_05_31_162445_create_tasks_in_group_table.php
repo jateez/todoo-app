@@ -14,6 +14,7 @@ class CreateTasksInGroupTable extends Migration
             $table->text('description')->nullable();
             $table->enum('priority', ['Urgent', 'Normal', 'Low'])->default('Normal');
             $table->date('due_date');
+            $table->boolean('hasFinished')->default(false); 
 
             // Foreign key relationship
             $table->unsignedBigInteger('group_id');

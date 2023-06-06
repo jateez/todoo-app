@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->boolean('completed')->default(false)->before('id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('priority', ['Urgent', 'Normal', 'Low'])->default('Normal');

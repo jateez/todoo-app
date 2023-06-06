@@ -28,7 +28,12 @@ class GroupController extends Controller
 
         $taskGroup = $taskGroupController->index($sortBy);
 
-        return view('groups.index', compact('group', 'taskGroup'));
+        $finishedTaskGroups = $taskGroup->filter(function ($taskGroup) {
+            return $taskGroup->hasFinished;
+        });
+
+        return view('groups.index', compact('group', 'taskGroup', 'finishedTaskGroups'));
+        // return view('groups.index', compact('group', 'taskGroup'));
     }
     // //New ONLY DELETE IF THE SORT BY FUNCTION WORKS
     // public function index(TaskGroupController $taskGroupController)
