@@ -73,3 +73,6 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.
 Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])->name('tasks.complete');
 Route::post('/tasks/{task}/inProgress', [TaskController::class, 'inProgressTask'])->name('tasks.inProgress');
 Route::resource('tasks', TaskController::class);
+
+//Profile
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
