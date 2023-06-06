@@ -52,7 +52,7 @@
                         <td>{{ $task->updated_at }}</td>
                         <td>{{ $task->due_date}}</td>
                         <td>
-                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-outline-primary btn-sm">Edit</a>
                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
