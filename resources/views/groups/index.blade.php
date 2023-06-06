@@ -51,9 +51,9 @@
         <div class="col-md-6">
             <div style="display: flex; align-items: center;">
                 <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
-                <p class="mt-3">Code Group : </p>
-                <p class="mt-3 ms-2" id="groupCode">{{ $group->joincode }}</p>
-                <button class="btn btn-outline-secondary" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
+                <p class="mt-3 d-none">Code Group : </p>
+                <p class="mt-3 ms-2 d-none" id="groupCode">{{ $group->joincode }}</p>
+                <button class="btn btn-outline-secondary mt-6 mb-3" onclick="copyGroupCode()">Code Group : {{ $group->joincode }}</button>
             </div>
 
             <div id="editGroup">
@@ -153,31 +153,44 @@
     <br>
     <form action="{{ route('groups.index') }}" method="GET">
 
-        <label for="sort_by">Sort By:</label>
+        <!-- <label for="sort_by">Sort By:</label> -->
+
         <div class="btn-group">
-            <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Action
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">
-                        Priority
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">
-                        Due Date
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="sort-info mt-3">
-            @if($sortBy == "priority")
-                <span class="badge bg-primary">Priority</span>
-            @else
-                <span class="badge bg-primary">Due Date</span>
-            @endif
-        </div>
+
+            <div class="dropdown sort">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">Priority</a></li>
+                    <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
+                </ul>
+                <!-- <div class="btn-group"> -->
+                <!-- <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Action
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">
+                    Priority
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">
+                    Due Date
+                </a>
+            </li>
+        </ul> -->
+                <!-- </div> -->
+                <div class="sort-info mt-3">
+                    @if(request('sort_by') == "priority")
+                    <span class="badge bg-primary">Priority</span>
+                    @elseif(request('sort_by') == "due_date")
+                    <span class="badge bg-primary">Due Date</span>
+                    @else
+                    <span class="badge bg-primary">Default</span>
+                    @endif
+                </div>
 
     </form>
 
@@ -236,7 +249,7 @@
     <p>No tasks found.</p>
     @endif
 
-    <br><br><br>
+    <br><br>
 
 
     @if(isset($finishedTaskGroups) && count($finishedTaskGroups) > 0)
