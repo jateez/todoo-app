@@ -25,7 +25,7 @@
             <p>{{ $group->description }}</p>
             <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
                 @csrf
-                <button type="button" class="btn btn-light" onclick="toggleMembersList()">Show Group Members</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="toggleMembersList()">Show Group Members</button>
             </form>
 
             <div id="groupMembers" style="display: none;">
@@ -53,13 +53,13 @@
                 <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
                 <p class="mt-3">Code Group : </p>
                 <p class="mt-3 ms-2" id="groupCode">{{ $group->joincode }}</p>
-                <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
+                <button class="btn btn-outline-secondary" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
             </div>
 
             <div id="editGroup">
                 <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
                     @csrf
-                    <button class="btn btn-light" type="submit">Edit Group</button>
+                    <button class="btn btn-outline-secondary" type="submit">Edit Group</button>
                 </form>
             </div>
 
@@ -170,6 +170,13 @@
                     </a>
                 </li>
             </ul>
+        </div>
+        <div class="sort-info mt-3">
+            @if($sortBy == "priority")
+                <span class="badge bg-primary">Priority</span>
+            @else
+                <span class="badge bg-primary">Due Date</span>
+            @endif
         </div>
 
     </form>
