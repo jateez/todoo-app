@@ -127,7 +127,7 @@
         <button type="submit" class="btn btn-primary">Add Task</button>
     </form>
 
-    @if ($errors->any())
+    <!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -135,7 +135,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 
     <!-- Sort by for Tasks -->
     <!-- <div>
@@ -153,11 +153,8 @@
     <br>
     <form action="{{ route('groups.index') }}" method="GET">
 
-        <!-- <label for="sort_by">Sort By:</label> -->
-
-        <div class="btn-group">
-
-            <div class="dropdown sort">
+        <div class="dropdown sort">
+            <div class="btn-group">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Sort By
                 </button>
@@ -165,32 +162,17 @@
                     <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">Priority</a></li>
                     <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
                 </ul>
-                <!-- <div class="btn-group"> -->
-                <!-- <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Action
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">
-                    Priority
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">
-                    Due Date
-                </a>
-            </li>
-        </ul> -->
-                <!-- </div> -->
-                <div class="sort-info mt-3">
-                    @if(request('sort_by') == "priority")
-                    <span class="badge bg-primary">Priority</span>
-                    @elseif(request('sort_by') == "due_date")
-                    <span class="badge bg-primary">Due Date</span>
-                    @else
-                    <span class="badge bg-primary">Default</span>
-                    @endif
-                </div>
+            </div>
+            <div class="sort-info mt-3">
+                @if(request('sort_by') == "priority")
+                <span class="badge bg-primary">Priority</span>
+                @elseif(request('sort_by') == "due_date")
+                <span class="badge bg-primary">Due Date</span>
+                @else
+                <span class="badge bg-primary">Default</span>
+                @endif
+            </div>
+        </div>
 
     </form>
 
