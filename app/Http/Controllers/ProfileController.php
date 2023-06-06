@@ -29,10 +29,27 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('profile.index');
-    }
 
-    public function retrieveData()
-    {
+        $userId = auth()->id();
+
+        // Retrieve count of unfinished tasks
+        $taskCount = Task::where('user_id', $userId)
+            ->where('completed', false)
+            ->count();
+
+        // Retrieve count of unfinished task groups
+        $taskGroupCount = TaskGroup::whereHas('group', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+            ->where('hasFinished', false)
+            ->count();
+
+        // Retrieve count of groups
+        $groupCount = Group::where('user_id', $userId)->count();
+
+        return view('profile.index', compact('taskCount', 'taskGroupCount', 'groupCount'));
+
+        // Old
+        // return view('profile.index');
     }
 }
