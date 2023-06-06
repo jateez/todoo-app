@@ -5,18 +5,29 @@
     <h1 class="text-center">Task Manager</h1>
     <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Add Task</a>
 
-    <div>
-        <form action="{{ route('tasks.index') }}" method="GET">
-            <label for="sort_by">Sort By : </label>
-            <select name="sort_by" id="sort_by">
-                <option value="priority" {{ $sortBy === 'priority' ? 'selected' : '' }}>Priority</option>
-                <option value="due_date" {{ $sortBy === 'due_date' ? 'selected' : '' }}>Due Date</option>
-            </select>
-            <button type="submit">Confirm</button>
-        </form>
+    <div class="dropdown sort" >
+        <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort By
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+            <li><a class="dropdown-item" href="{{ route('tasks.index', ['sort_by' => 'priority']) }}">Priority</a></li>
+            <li><a class="dropdown-item" href="{{ route('tasks.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
+        </ul>
+        
+        <div class="sort-info mt-3">
+            @if($sortBy == "priority")
+                <span class="badge bg-primary">Priority</span>
+            @else
+                <span class="badge bg-primary">Due Date</span>
+            @endif
+        </div>
+        
     </div>
 
-    <h2>Task on Progress</h2>
+   
+
+
+    <h2 class="task-h2">Task on Progress</h2>
     @if(count($tasksInProgress) > 0)
         <table class="table styled-table">
             <thead>
@@ -62,7 +73,7 @@
         <p>No tasks in progress.</p>
     @endif
 
-    <h2>Task Completed</h2>
+    <h2 class="task-h2">Task Completed</h2>
     @if(count($completedTasks) > 0)
         <table class="table styled-table">
             <thead>
