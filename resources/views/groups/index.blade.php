@@ -3,21 +3,25 @@
 @section('content')
 
 @if(session('error'))
-<div class="alert alert-danger">{{ session('error') }}
+<div class="alert alert-danger">
+    {{ session('error') }}
 </div>
 @endif
 
 @if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
 @endif
 
 
 <div class="container">
 
-    <div class="row"> 
+    <div class="row">
+
+        @isset($group)
+        <h1>{{ $group->name }}</h1>
         <div class="col-md-6">
-            @isset($group)
-            <h1>{{ $group->name }}</h1>
             <p>{{ $group->description }}</p>
             <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
                 @csrf
@@ -42,24 +46,24 @@
             </div>
             @endif
         </div>
-        
-    <!-- Code Joiin Group -->
-    <div class="col-md-6">
-    <div style="display: flex; align-items: center;">
-    <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
-    <p>Code Group : </p>
-    <p id="groupCode">{{ $group->joincode }}</p>
-    <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
-</div>
 
-        <div id="editGroup">
-            <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
-                @csrf
-                <button class="btn btn-light" type="submit">Edit Group</button>
-            </form>
+        <!-- Code Joiin Group -->
+        <div class="col-md-6">
+            <div style="display: flex; align-items: center;">
+                <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
+                <p>Code Group : </p>
+                <p id="groupCode">{{ $group->joincode }}</p>
+                <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
+            </div>
+
+            <div id="editGroup">
+                <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
+                    @csrf
+                    <button class="btn btn-light" type="submit">Edit Group</button>
+                </form>
+            </div>
+
         </div>
-            
-    </div>
     </div>
 
     <!-- Old -->
@@ -85,7 +89,7 @@
         @endif
 
     </div> -->
-    
+
     @endisset
 
 
@@ -147,18 +151,30 @@
         <br>
     </div> -->
     <br>
-    <form action="{{ route('groups.index') }}" method="GET"></form>
-    <label for="sort_by">Sort By:</label>
-    <div class="btn-group">
-        <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Action
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" value="priority" {{ request('sort_by') == 'priority' ? 'selected' : '' }}>Priority</a></li>
-    <li><a class="dropdown-item" value="due_date" {{ request('sort_by') == 'due_date' ? 'selected' : '' }}>Due Date</a></li>
-  </ul>
-</div>
-<br>
+    <form action="{{ route('groups.index') }}" method="GET">
+
+        <label for="sort_by">Sort By:</label>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">
+                        Priority
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">
+                        Due Date
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </form>
+
+    <br>
 
 
 
@@ -261,7 +277,7 @@
 
     <br>
     @isset($group)
-    
+
 
     @if (Auth::user()->id === $group->user_id)
     <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskGroupController extends Controller
 {
@@ -163,6 +165,7 @@ class TaskGroupController extends Controller
             return $taskGroup->hasFinished;
         });
 
-        return view('groups.index', compact('group', 'taskGroup', 'finishedTaskGroups'))->with('success', 'Task status updated.');
+        session()->flash('success', 'Task status updated.');
+        return redirect()->route('groups.index', compact('group', 'taskGroup', 'finishedTaskGroups'));
     }
 }
