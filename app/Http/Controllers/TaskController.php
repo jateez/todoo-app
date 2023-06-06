@@ -12,14 +12,17 @@ class TaskController extends Controller
         $sortBy = $request->input('sort_by', 'priority');
 
         if ($sortBy == 'priority') {
-            $tasks = Task::orderBy('priority', 'asc')->get();
+            $tasksInProgress = Task::where('completed', false)->orderBy('priority', 'asc')->get();
+            $completedTasks = Task::where('completed', true)->orderBy('priority', 'asc')->get();
         } elseif ($sortBy == 'due_date') {
-            $tasks = Task::orderBy('due_date', 'asc')->get();
+            $tasksInProgress = Task::where('completed', false)->orderBy('due_date', 'asc')->get();
+            $completedTasks = Task::where('completed', true)->orderBy('due_date', 'asc')->get();
         } else {
-            $tasks = Task::all();
+            $tasksInProgress = Task::where('completed', false)->get();
+            $completedTasks = Task::where('completed', true)->get();
         }
 
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasksInProgress', 'completedTasks', 'sortBy'));
     }
 
     public function create()
@@ -34,6 +37,7 @@ class TaskController extends Controller
         $task->description = $request->input('description');
         $task->priority = $request->input('priority');
         $task->due_date = $request->input('due_date');
+        $task->completed = false;
         $task->save();
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
@@ -60,5 +64,21 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+    }
+
+    public function complete(Request $request, Task $task)
+    {
+        $task->completed = !$task->completed;
+        $task->save();
+
+        return redirect()->route('tasks.index');
+    }
+
+    public function inProgressTask(Request $request, Task $task)
+    {
+        $task->completed = !$task->completed;
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 }
