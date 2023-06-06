@@ -14,32 +14,52 @@
 
 <div class="container">
 
-    <div class="row" style="display:inline-block">
-        @isset($group)
-        <h1>{{ $group->name }}</h1>
+    <div class="row"> 
+        <div class="col-md-6">
+            @isset($group)
+            <h1>{{ $group->name }}</h1>
+            <p>{{ $group->description }}</p>
+            <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
+                @csrf
+                <button type="button" class="btn btn-light" onclick="toggleMembersList()">Show Group Members</button>
+            </form>
 
-        <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
-            @csrf
-            <button type="button" onclick="toggleMembersList()">Show Group Members</button>
-        </form>
-
-        <div id="groupMembers" style="display: none;">
-            <h3>Group Members:</h3>
-            <ul>
-                @foreach($group->users as $member)
-                <li>{{ $member->name }}
-                    @if ($group->user_id === auth()->user()->id && $member->id !== $group->user_id)
-                    <form method="POST" action="{{ route('groups.kickMember', ['group' => $group->id, 'member' => $member->id]) }}" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Kick</button>
-                    </form>
-                    @endif
-                </li>
-                @endforeach
-            </ul>
+            <div id="groupMembers" style="display: none;">
+                <p>Group Members:</p>
+                <ul class="list-group">
+                    @foreach($group->users as $member)
+                    <li class="list-group-item">{{ $member->name }}
+                        @if ($group->user_id === auth()->user()->id && $member->id !== $group->user_id)
+                        <form method="POST" action="{{ route('groups.kickMember', ['group' => $group->id, 'member' => $member->id]) }}" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Kick</button>
+                        </form>
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
-        @endif
+        
+    <!-- Code Joiin Group -->
+    <div class="col-md-6">
+    <div style="display: flex; align-items: center;">
+    <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
+    <p>Code Group : </p>
+    <p id="groupCode">{{ $group->joincode }}</p>
+    <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
+</div>
+
+        <div id="editGroup">
+            <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
+                @csrf
+                <button class="btn btn-light" type="submit">Edit Group</button>
+            </form>
+        </div>
+            
+    </div>
     </div>
 
     <!-- Old -->
@@ -65,21 +85,24 @@
         @endif
 
     </div> -->
-    <p>{{ $group->description }}</p>
+    
     @endisset
 
 
 
     <form action="{{ route('taskgroups.store', $group) }}" method="POST">
         @csrf
+        <br>
         <div class="form-group">
             <label for="name">Task Name</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Input task name here" required>
         </div>
+        <br>
         <div class="form-group">
             <label for="description">Task Description</label>
             <input type="text" class="form-control" name="description" id="description" placeholder="Write task detail here">
         </div>
+        <br>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="priority">Priority</label>
@@ -89,12 +112,14 @@
                     <option value="Low">Low</option>
                 </select>
             </div>
+            <br>
             <div class="form-group col-md-4">
                 <label for="due_date">Due Date</label>
                 <!-- New -->
                 <input type="date" name="due_date" id="due_date" class="form-control" value="{{ old('due_date') }}">
             </div>
         </div>
+        <br>
         <button type="submit" class="btn btn-primary">Add Task</button>
     </form>
 
@@ -109,7 +134,8 @@
     @endif
 
     <!-- Sort by for Tasks -->
-    <div>
+    <!-- <div>
+        <br>
         <form action="{{ route('groups.index') }}" method="GET">
             <label for="sort_by">Sort By:</label>
             <select name="sort_by" id="sort_by">
@@ -118,7 +144,21 @@
             </select>
             <button type="submit">Confirm</button>
         </form>
-    </div>
+        <br>
+    </div> -->
+    <br>
+    <form action="{{ route('groups.index') }}" method="GET"></form>
+    <label for="sort_by">Sort By:</label>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" value="priority" {{ request('sort_by') == 'priority' ? 'selected' : '' }}>Priority</a></li>
+    <li><a class="dropdown-item" value="due_date" {{ request('sort_by') == 'due_date' ? 'selected' : '' }}>Due Date</a></li>
+  </ul>
+</div>
+<br>
 
 
 
@@ -150,17 +190,17 @@
                 <td>{{ $task->updated_at }}</td>
                 <td>{{ $task->due_date }}</td>
                 <td>
-                    <a href="{{ route('taskgroups.editTask', ['group' => $group->id, 'task' => $task->id]) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('taskgroups.editTask', ['group' => $group->id, 'task' => $task->id]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
                     <form action="{{ route('taskgroups.destroy', ['group' => $group->id, 'task' => $task->id]) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </td>
                 <td>
                     <form action="{{ route('taskgroups.markAsDone', ['group' => $group->id, 'task' => $task->id]) }}" method="POST">
                         @csrf
-                        <input type="checkbox" name="done" onchange="this.form.submit()" {{ $task->hasFinished ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="done" onchange="this.form.submit()" {{ $task->hasFinished ? 'checked' : '' }}>
                     </form>
                 </td>
 
@@ -221,10 +261,7 @@
 
     <br>
     @isset($group)
-    <p>Kode Grup: <span id="groupCode">{{ $group->joincode }}</span></p>
-
-
-    <button onclick="copyGroupCode()">Copy</button> <br> <br>
+    
 
     @if (Auth::user()->id === $group->user_id)
     <form method="POST" action="{{ route('groups.delete', $group) }}" style="display: inline;">
@@ -240,20 +277,17 @@
     @endif
 
     @endisset
-    @isset($group)
-    <!-- tambahkan rute -->
-    <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
-        @csrf
-        <button class="btn btn-light" type="submit">Edit</button>
-    </form>
+    <!--  @isset($group)
+    tambahkan rute 
+    
 
-    <!-- <form method="POST" action="{{ route('groups.update', ['group' => $group->id]) }}" style="display: inline;">
+    <form method="POST" action="{{ route('groups.update', ['group' => $group->id]) }}" style="display: inline;">
         @csrf
         @method('PUT')
         <button class="btn btn-light" type="submit">Edit</button>
-    </form> -->
+    </form>
 
-    @endisset
+    @endisset -->
 
 </div>
 
@@ -301,7 +335,7 @@
         tempInput.value = groupCode.textContent;
         document.body.appendChild(tempInput);
         tempInput.select();
-        document.execCommand('copy');
+        document.execCommand('Copy');
         document.body.removeChild(tempInput);
         alert('Kode Grup telah disalin!');
     }

@@ -13,7 +13,7 @@
                 @else
                 <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
                 @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-primary">Register</a>
                 @endif
                 @endauth
                 @endif

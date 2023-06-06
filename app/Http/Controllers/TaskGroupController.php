@@ -151,6 +151,18 @@ class TaskGroupController extends Controller
         $taskGroup->hasFinished = !$taskGroup->hasFinished;
         $taskGroup->save();
 
-        return redirect()->route('groups.index')->with('success', 'Task marked as done.');
+        $user = Auth::user();
+        $group = $user->group;
+
+        $sortBy = request()->input('sort_by', 'priority');
+
+        $taskGroupController = new TaskGroupController();
+        $taskGroup = $taskGroupController->index($sortBy);
+
+        $finishedTaskGroups = $taskGroup->filter(function ($taskGroup) {
+            return $taskGroup->hasFinished;
+        });
+
+        return view('groups.index', compact('group', 'taskGroup', 'finishedTaskGroups'))->with('success', 'Task status updated.');
     }
 }
