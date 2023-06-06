@@ -13,39 +13,41 @@
 </div>
 @endif
 
-
 <div class="container">
-    <div class="row justify-content-center">
-        <div>
-            <h4>Hi, {{ Auth::user()->name }}</h4>
-            <h6>Welcome to the Todoo App</h6>
-            <img src="{{ asset('images/bunnies_logo.png') }}" alt="">
+    <div class="row">
+        <div class="col-md-6 d-flex align-items-center">
+            <div>
+                <div class="mb-4">
+                    <h6>Hi, {{ Auth::user()->name }}</h4>
+                        <h1 class="fw-semibold">Start Managing Your Task</h4>
+                </div>
+                <div>
+                    @if (Route::has('groups.index'))
+                    @auth
+                    @if (auth()->user()->group)
+                    <a href="{{ route('groups.index') }}" class="btn btn-primary">
+                        View {{ auth()->user()->group->name }}
+                    </a>
+                    <a href="{{ route('tasks.create') }}" class="btn btn-outline-primary">Add New Indidual Task</a>
+                    @else
+                    <h6 class="fst-italic">You haven't join any group!</h6>
+                    <a href="{{ route('groups.create') }}" class="btn btn-primary">
+                        Create New Group
+                    </a>
+                    <a href="{{ route('groups.joinform') }}" class="btn btn-outline-primary">
+                        Join Group
+                    </a>
+                    @endif
+                    @endauth
+                    @endif
+                </div>
+            </div>
         </div>
-        <div>
-            @if (Route::has('groups.index'))
-            @auth
-            @if (auth()->user()->group)
-            <a href="{{ route('groups.index') }}" class="btn btn-primary">
-                View {{ auth()->user()->group->name }}
-            </a>
-            @else
-            <a href="{{ route('groups.create') }}" class="btn btn-primary">
-                Create Group
-            </a>
-            <a href="{{ route('groups.joinform') }}" class="btn btn-primary">
-                Join Group
-            </a>
 
-            @endif
-            @endauth
-            @endif
-
-
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="{{ asset('images/home-illustration.png') }}" alt="Illustration" class="img-fluid w-50">
         </div>
     </div>
 </div>
-<div class="my-5 py-5">
 
-</div>
-</div>
 @endsection
