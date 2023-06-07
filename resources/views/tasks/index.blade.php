@@ -53,8 +53,8 @@
                 <td>{{ $task->priority }}</td>
                 <td>{{ $task->created_at }}</td>
                 <td>{{ $task->updated_at }}</td>
-                <td @if($task->due_date < now()) style="color: red;" @endif>{{ $task->due_date}}
-                    @if($task->due_date < now()) <br><span style="color: red;">Overdue</span> @endif
+                <td @if($task->due_date < now()->subDay()) style="color: red;" @endif>{{ $task->due_date}}
+                    @if($task->due_date < now()->subDay()) <br><span style="color: red;">Overdue</span> @endif
                 </td>
                 <td>
                     <a href="{{ route('tasks.edit', $task->id) }}"
