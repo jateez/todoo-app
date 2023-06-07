@@ -11,7 +11,7 @@
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body text-center">
                                 <div class="mt-3 mb-4">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" class="rounded-circle img-fluid" style="width: 100px;" />
+                                    <img src="{{ asset('images/profile-picture.png') }}" class="rounded-circle img-fluid" style="width: 100px;" />
                                 </div>
                                 <h4 class="mb-2">{{ Auth::user()->name }}</h4>
                                 <a></a>{{ Auth::user()->email }}</p>
@@ -45,7 +45,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
