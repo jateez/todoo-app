@@ -18,17 +18,17 @@
         <div class="col-md-6 d-flex align-items-center">
             <div>
                 <div class="mb-4">
-                    <h6>Hi, {{ Auth::user()->name }}</h4>
-                        <h1 class="fw-semibold">Start Managing Your Task</h4>
+                    <h6>Hi, {{ Auth::user()->name }}</h6>
+                        <h1 class="fw-semibold">Start Managing Your Tasks</h1>
                 </div>
                 <div>
                     @if (Route::has('groups.index'))
                     @auth
                     @if (auth()->user()->group)
                     <a href="{{ route('groups.index') }}" class="btn btn-primary">
-                        View {{ auth()->user()->group->name }}
+                        View Group
                     </a>
-                    <a href="{{ route('tasks.create') }}" class="btn btn-outline-primary">Add New Indidual Task</a>
+                    <a href="{{ route('tasks.create') }}" class="btn btn-outline-primary">Add Personal Task</a>
                     @else
                     <h6 class="fst-italic">You haven't join any group!</h6>
                     <a href="{{ route('groups.create') }}" class="btn btn-primary">

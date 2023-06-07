@@ -31,15 +31,15 @@
                                 </a>
                                 <div class="d-flex justify-content-between text-center mt-5 mb-2">
                                     <div>
-                                        <p class="mb-2 h5">1</p>
+                                        <p class="mb-2 h5">{{ $groupCount }}</p>
                                         <p class="text-muted mb-0">Total Group</p>
                                     </div>
                                     <div class="px-3">
-                                        <p class="mb-2 h5">4</p>
+                                        <p class="mb-2 h5">{{ $taskGroupCount }}</p>
                                         <p class="text-muted mb-0">Group Tasks</p>
                                     </div>
                                     <div>
-                                        <p class="mb-2 h5">3</p>
+                                        <p class="mb-2 h5">{{ $taskCount }}</p>
                                         <p class="text-muted mb-0">Individual Tasks</p>
                                     </div>
                                 </div>
