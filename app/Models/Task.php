@@ -16,7 +16,13 @@ class Task extends Model
         'description',
         'priority',
         'due_date',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     protected $guarded = ['id'];
 }

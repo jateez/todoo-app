@@ -23,6 +23,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                <div>
+                    <img src="https://raw.githubusercontent.com/Hanzz14/jawir/2ecb8ebec7b174365da22b05a3e84ef97190d346/Logo%20Bunnies.svg" alt="Logo-Todoo-Apps">
+                </div>
 
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}

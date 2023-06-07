@@ -21,6 +21,8 @@ class CreateTasksTable extends Migration
             $table->enum('priority', ['Urgent', 'Normal', 'Low'])->default('Normal');
             $table->timestamps();
             $table->date('due_date');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

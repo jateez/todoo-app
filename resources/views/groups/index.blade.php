@@ -25,7 +25,7 @@
             <p>{{ $group->description }}</p>
             <form action="{{ route('groups.showMembers', ['group' => $group->id]) }}" method="GET">
                 @csrf
-                <button type="button" class="btn btn-light" onclick="toggleMembersList()">Show Group Members</button>
+                <button type="button" class="btn btn-outline-primary" onclick="toggleMembersList()">Show Group Members</button>
             </form>
 
             <div id="groupMembers" style="display: none;">
@@ -51,15 +51,15 @@
         <div class="col-md-6">
             <div style="display: flex; align-items: center;">
                 <!-- <p style="margin-right: 10px;">Code Group: <b>{{ $group->joincode }}</b></p> -->
-                <p>Code Group : </p>
-                <p id="groupCode">{{ $group->joincode }}</p>
-                <button class="btn btn-light" style="margin-left: 10px;" onclick="copyGroupCode()">Copy</button>
+                <p class="mt-3 d-none">Code Group : </p>
+                <p class="mt-3 ms-2 d-none" id="groupCode">{{ $group->joincode }}</p>
+                <button class="btn btn-outline-primary mt-6 mb-3" onclick="copyGroupCode()">Code Group : {{ $group->joincode }}</button>
             </div>
 
             <div id="editGroup">
                 <form method="GET" action="{{ route('groups.edit', ['group' => $group->id]) }}" style="display: inline;">
                     @csrf
-                    <button class="btn btn-light" type="submit">Edit Group</button>
+                    <button class="btn btn-outline-primary" type="submit">Edit Group</button>
                 </form>
             </div>
 
@@ -127,7 +127,7 @@
         <button type="submit" class="btn btn-primary">Add Task</button>
     </form>
 
-    @if ($errors->any())
+    <!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -135,7 +135,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 
     <!-- Sort by for Tasks -->
     <!-- <div>
@@ -153,23 +153,25 @@
     <br>
     <form action="{{ route('groups.index') }}" method="GET">
 
-        <label for="sort_by">Sort By:</label>
-        <div class="btn-group">
-            <button type="submit" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Action
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">
-                        Priority
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">
-                        Due Date
-                    </a>
-                </li>
-            </ul>
+        <div class="dropdown sort">
+            <div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'priority']) }}">Priority</a></li>
+                    <li><a class="dropdown-item" href="{{ route('groups.index', ['sort_by' => 'due_date']) }}">Due Date</a></li>
+                </ul>
+            </div>
+            <div class="sort-info mt-3 mb-3">
+                @if(request('sort_by') == "priority")
+                <span class="badge bg-primary">Priority</span>
+                @elseif(request('sort_by') == "due_date")
+                <span class="badge bg-primary">Due Date</span>
+                @else
+                <span class="badge bg-primary">Default</span>
+                @endif
+            </div>
         </div>
 
     </form>
@@ -206,7 +208,7 @@
                 <td>{{ $task->updated_at }}</td>
                 <td>{{ $task->due_date }}</td>
                 <td>
-                    <a href="{{ route('taskgroups.editTask', ['group' => $group->id, 'task' => $task->id]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                    <a href="{{ route('taskgroups.editTask', ['group' => $group->id, 'task' => $task->id]) }}" class="btn btn-outline-primary btn-sm">Edit</a>
                     <form action="{{ route('taskgroups.destroy', ['group' => $group->id, 'task' => $task->id]) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
@@ -229,7 +231,7 @@
     <p>No tasks found.</p>
     @endif
 
-    <br><br><br>
+    <br><br>
 
 
     @if(isset($finishedTaskGroups) && count($finishedTaskGroups) > 0)

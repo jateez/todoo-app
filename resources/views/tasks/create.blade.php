@@ -23,7 +23,7 @@
             </div>
             <div class="form-group mt-3">
                 <label for="priority">Due Date</label>
-                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}">
+                <input type="date" name="due_date" id="due_date" class="form-control" value="{{ $task->due_date ?? '' }}" required>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Add Task</button>
         </form>

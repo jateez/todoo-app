@@ -45,7 +45,9 @@
         </div>
 
         <div class="col-md-6 d-flex justify-content-center">
-            <img src="{{ asset('images/home-illustration.png') }}" alt="Illustration" class="img-fluid w-50">
+            <img src="https://raw.githubusercontent.com/Hanzz14/jawir/59e60c1fef22cfa004c925b0e4e7cc89783a5863/illustration.svg" alt="Illustration-Hero-Img">
+            <!-- <img src="https://raw.githubusercontent.com/Hanzz14/jawir/ff20de6befddc292753fe578afbcd77b154a763e/Illustration%20Bunnies.svg" alt="Logo-Todoo-Apps"> -->
+            <!-- <img src="{{ asset('images/home-illustration.png') }}" alt="Illustration" class="img-fluid w-50"> -->
         </div>
     </div>
 </div>
