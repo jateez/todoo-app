@@ -27,43 +27,6 @@ class TaskGroupController extends Controller
     }
 
 
-    // New ONLY DELETE IF SORT BY FUNCTIONS WORKS
-    // public function index()
-    // {
-    //     // Modify the logic to retrieve the task group data
-    //     $sortBy = request()->input('sort_by', 'priority');
-
-    //     if ($sortBy == 'priority') {
-    //         $taskGroup = TaskGroup::orderBy('priority', 'asc')->get();
-    //     } elseif ($sortBy == 'due_date') {
-    //         $taskGroup = TaskGroup::orderBy('due_date', 'asc')->get();
-    //     } else {
-    //         $taskGroup = TaskGroup::all();
-    //     }
-
-    //     return $taskGroup;
-    // }
-
-    // Old
-    // public function index(Request $request)
-    // {
-    //     // dd('Controller is called');
-    //     //Nambahin dari sini
-    //     $sortBy = $request->input('sort_by', 'priority');
-
-    //     if ($sortBy == 'priority') {
-    //         $taskGroup = TaskGroup::orderBy('priority', 'asc')->get();
-    //     } elseif ($sortBy == 'due_date') {
-    //         $taskGroup = TaskGroup::orderBy('due_date', 'asc')->get();
-    //     } else {
-    //         $taskGroup = TaskGroup::all();
-    //     }
-    //     //Sampai sini
-
-    //     return view('groups.index', compact('taskGroup'));
-    // }
-
-
     public function store(Request $request)
     {
         //New
@@ -83,14 +46,6 @@ class TaskGroupController extends Controller
             'due_date' => $request->input('due_date'),
             'group_id' => auth()->user()->group_id
         ]);
-
-        //Old
-        // $taskGroup = new TaskGroup;
-        // $taskGroup->name = $request->input('name');
-        // $taskGroup->description = $request->input('description');
-        // $taskGroup->priority = $request->input('priority');
-        // $taskGroup->due_date = $request->input('due_date');
-        // $taskGroup->save();
 
         return redirect()->route('groups.index')->with('success', 'Task created successfully.');
     }
@@ -130,14 +85,6 @@ class TaskGroupController extends Controller
         $taskGroup->due_date = $request->input('due_date');
 
         $taskGroup->save();
-
-
-        //Old
-        // $taskGroup->name = $request->input('name');
-        // $taskGroup->description = $request->input('description');
-        // $taskGroup->priority = $request->input('priority');
-        // $taskGroup->due_date = $request->input('due_date');
-        // $taskGroup->save();
 
         return redirect()->route('groups.index')->with('success', 'Task updated successfully.');
     }
